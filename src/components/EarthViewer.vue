@@ -14,6 +14,8 @@ export default {
       animation: false,
       timeline: false,
       shouldAnimate: true,
+      infoBox: false,
+      selectionIndicator: false
     })
     console.log(this.viewer)
   },

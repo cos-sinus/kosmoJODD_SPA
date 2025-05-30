@@ -3,9 +3,14 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import cesiumPlugin from './vite-plugin-cesium'
+import vuetify from 'vite-plugin-vuetify'
 
 export default defineConfig({
-  plugins: [vue(), cesiumPlugin()],
+  plugins: [
+    vue(), 
+    cesiumPlugin(),
+    vuetify({ autoImport: true })
+  ],
   resolve: {
     alias: {
       cesium: path.resolve(__dirname, 'node_modules/cesium/Source'),
