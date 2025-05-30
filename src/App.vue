@@ -1,26 +1,16 @@
 <template>
-  <v-app>
-    <header class="bg-blue-lighten-2">
-    </header>
-    <v-main>
-      <router-view/>
-    </v-main>
-  </v-app>
+  <EarthViewer></EarthViewer>
 </template>
 
 <script>
-
+import EarthViewer from './components/EarthViewer.vue'
 export default {
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
+  components : {
+    EarthViewer
+  }
 }
 </script>
+
 <style scoped>
-header{
-  width: 100vw;
-  height: 100px;
-}
+
 </style>
