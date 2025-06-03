@@ -17,10 +17,11 @@ export default {
       shouldAnimate: true,
       infoBox: false,
       selectionIndicator: false,
-      imageryProvider: false,
-      baseLayerPicker: false,
+      // imageryProvider: false,
+      // baseLayerPicker: false,
     })
-    this.initSatellite()
+    this.initSatellite();
+    this.$emit("init");
 
   },
   beforeUnmount() {
@@ -67,3 +68,9 @@ export default {
   },
 }
 </script>
+<style scoped>
+#cesiumContainer{
+  width: 100%;
+  height: 80vh;
+}
+</style>
