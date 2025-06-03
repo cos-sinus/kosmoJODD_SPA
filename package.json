@@ -10,6 +10,7 @@
     "copy-cesium-assets": "node scripts/copy-cesium-assets.cjs"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "cesium": "^1.129.0",
     "pinia": "^3.0.2",
     "sass": "^1.89.0",

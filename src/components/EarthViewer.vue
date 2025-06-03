@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { Viewer, Cartesian3, Color } from '/node_modules/cesium/Source/Cesium.js'
+import { Viewer, Cartesian3, Color, EllipsoidTerrainProvider } from '/node_modules/cesium/Source/Cesium.js'
 import * as satellite from 'satellite.js'
 
 export default {
@@ -11,12 +11,14 @@ export default {
     mounted() {
     // Инициализация Cesium после монтирования DOM
     this.viewer = new Viewer('cesiumContainer', {
-      terrainProvider: undefined,
+      terrainProvider: new EllipsoidTerrainProvider(),
       animation: false,
       timeline: false,
       shouldAnimate: true,
       infoBox: false,
-      selectionIndicator: false
+      selectionIndicator: false,
+      imageryProvider: false,
+      baseLayerPicker: false,
     })
     this.initSatellite()
 

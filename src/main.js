@@ -5,7 +5,8 @@ import router from './router'
 import { createPinia } from 'pinia'
 import { createVuetify } from 'vuetify'
 import 'vuetify/styles'
-// import '@mdi/font/css/materialdesignicons.css'
+
+import '@mdi/font/css/materialdesignicons.css'
 
 
 const vuetify = createVuetify();
