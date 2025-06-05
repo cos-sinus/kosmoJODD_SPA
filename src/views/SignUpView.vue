@@ -11,7 +11,7 @@
 
 </template>
 <script> 
-import { useUserStore } from '@/store/user_store';
+import { useUserStore } from '../store/user_store';
 import { mapActions } from 'pinia';
 export default {
     data(){
