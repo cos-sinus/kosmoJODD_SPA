@@ -17,7 +17,8 @@ export default {
     },
     computed: {
       ...mapState(useSatelliteStore, {
-        satellites : "satellites"
+        satellites : "satellites",
+        selectedSatellite : "selected_satellite"
       })
     },
     mounted() {
@@ -33,6 +34,7 @@ export default {
         // baseLayerPicker: false,
       })
       this.$emit("init");
+      console.log("Cesium загрузился");
     },
     beforeUnmount() {
       // Убираем viewer при удалении компонента
@@ -69,6 +71,7 @@ export default {
           const lat = satellite.degreesLat(positionGd.latitude);
           const height = positionGd.height;
           this.viewer.entities.add({
+            id: sat.id,
             position: Cartesian3.fromDegrees(lon, lat, height),
             point: { pixelSize: 10, color: Color.LIME },
             label: { text: sat.name || 'Satellite', font: '14pt sans-serif' }
@@ -85,6 +88,9 @@ export default {
     watch : {
       satellites(){
         this.initSatellites();
+      },
+      selectedSatellite(newValue){
+        console.log("Выбран другой спутник");
       }
     }
 }

@@ -6,16 +6,21 @@
       item-value="name"
       select-strategy="single"
       show-select
+      v-model="selectedSatellite"
     >
     </v-data-table>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'pinia';
+import { useSatelliteStore } from '../store/satellite_store';
+
 export default {
     data (){
         return {
-            headers : [
+          selectedSatellite: null,
+          headers : [
             {
                 title: 'Спутник',
                 align: 'start',
@@ -23,12 +28,21 @@ export default {
             },
             { title: 'Norad ID', align: 'end', key: 'cutalog_num' },
             { title: 'Год запуска', align: 'end', key: 'international_des_year' },
-            ],
+          ],
         }
-       
     },
     props: {
       satellites: Array
+    },
+    methods : {
+      ...mapActions(useSatelliteStore, {
+        setSelectedSatellite: "setSelectedSatellite"
+      })
+    },
+    watch : {
+      selectedSatellite() {
+        this.setSelectedSatellite(this.selectedSatellite);
+      }
     }
 }
 </script>

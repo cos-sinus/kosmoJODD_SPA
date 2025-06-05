@@ -1,9 +1,16 @@
 <template>
   <v-container>
-    <v-row v-show="isLoaded && satellites.length > 0">
+    <v-progress-circular
+      v-show="!isSatellitesLoaded || !isCesiumLoaded"
+      :size="70"
+      :width="7"
+      color="purple"
+      indeterminate
+    ></v-progress-circular>
+    <v-row v-show="isSatellitesLoaded && satellites.length > 0">
       <v-col cols="6">
         <v-card>
-          <EarthViewer @init="isLoaded = true" />
+          <EarthViewer @init="isCesiumLoaded = true" />
         </v-card>
       </v-col>
       <v-col cols="6">
@@ -12,13 +19,6 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-progress-circular
-      v-if="!isLoaded"
-      :size="70"
-      :width="7"
-      color="purple"
-      indeterminate
-    ></v-progress-circular>
   </v-container>
 </template>
 
@@ -30,7 +30,8 @@ import EarthViewer from '../components/EarthViewer.vue';
 export default{
   data(){
     return {
-      isLoaded : false
+      isSatellitesLoaded : false,
+      isCesiumLoaded : false
     }
   },
   components : {
@@ -45,10 +46,15 @@ export default{
   methods : {
     ...mapActions(useSatelliteStore, {
         getAllSatellites : 'getAllSatellites',
-    })
+    }),
+    init(){
+      console.log("init");
+      this.isSatellitesLoaded = true;
+    }
   },
-  async mounted(){
+  async created(){
     await this.getAllSatellites();
+    this.init();
   }
 }
 </script>
