@@ -51,7 +51,7 @@ export default {
         const lines = fullTle.split('\n');
         return lines.length > 1 ? lines[1] : '';
       },
-      renderSatellite(sat){
+      renderSatellite(sat, is_highlighted = false){
           if (!sat.full_TLE) {
             console.warn('Satellite missing full_TLE:', sat);
             return;
@@ -70,27 +70,36 @@ export default {
           const lon = satellite.degreesLong(positionGd.longitude);
           const lat = satellite.degreesLat(positionGd.latitude);
           const height = positionGd.height;
-          this.viewer.entities.add({
+          const entity = this.viewer.entities.add({
             id: sat.id,
             position: Cartesian3.fromDegrees(lon, lat, height),
-            point: { pixelSize: 10, color: Color.LIME },
-            label: { text: sat.name || 'Satellite', font: '14pt sans-serif' }
+            point: { 
+              pixelSize: (is_highlighted) ? 10 : 15, 
+              color: (is_highlighted) ? Color.LIGHTBLUE : Color.LIME
+            },
+            label: { 
+              text: sat.name || 'Satellite', 
+              font: '14pt sans-serif',
+              fillColor: (is_highlighted) ? Color.RED : Color.WHITE,
+            }
           });
       },
       initSatellites() {
+        this.viewer.entities.removeAll();
         if (!this.satellites.length) {
           console.warn('No satellites data available');
           return;
         }
-        this.satellites.forEach(sat => this.renderSatellite(sat));
+        const seletedId = (this.selectedSatellite) ? this.selectedSatellite[0].id : 0
+        this.satellites.forEach(sat => this.renderSatellite(sat, sat.id === seletedId));
       }
     },
     watch : {
       satellites(){
         this.initSatellites();
       },
-      selectedSatellite(newValue){
-        console.log("Выбран другой спутник");
+      selectedSatellite(){
+        this.initSatellites();
       }
     }
 }
@@ -101,4 +110,3 @@ export default {
   height: 80vh;
 }
 </style>
-

@@ -6,6 +6,7 @@
       item-value="name"
       select-strategy="single"
       show-select
+      return-object
       v-model="selectedSatellite"
     >
     </v-data-table>
@@ -40,8 +41,8 @@ export default {
       })
     },
     watch : {
-      selectedSatellite() {
-        this.setSelectedSatellite(this.selectedSatellite);
+      selectedSatellite(newValue) {
+        this.setSelectedSatellite(newValue);
       }
     }
 }
