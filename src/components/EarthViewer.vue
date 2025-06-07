@@ -1,4 +1,5 @@
 <template>
+  <h3 v-if="isLoading">Идет загрузка...</h3>
   <div id="cesiumContainer"></div>
 </template>
 
@@ -6,19 +7,21 @@
 import { Viewer, Cartesian3, Color, EllipsoidTerrainProvider } from '/node_modules/cesium/Source/Cesium.js'
 import * as satellite from 'satellite.js'
 import { useSatelliteStore } from '../store/satellite_store';
-import { mapState } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 
 export default {
     name: 'EarthViewer',
     data() {
       return {
         viewer: null,
+        isLoading: false
       }
     },
     computed: {
       ...mapState(useSatelliteStore, {
         satellites : "satellites",
-        selectedSatellite : "selected_satellite"
+        selectedSatellite : "selected_satellite",
+        nearSatellites : "near_satellites"
       })
     },
     mounted() {
@@ -43,6 +46,9 @@ export default {
       }
     },
     methods : {
+      ...mapActions(useSatelliteStore, {
+        get_near_satellites : "getNearSatellites"
+      }),
       getTleLine1(fullTle) {
         const lines = fullTle.split('\n');
         return lines.length > 0 ? lines[0] : '';
@@ -51,11 +57,30 @@ export default {
         const lines = fullTle.split('\n');
         return lines.length > 1 ? lines[1] : '';
       },
-      renderSatellite(sat, is_highlighted = false){
+      renderSatellite(sat, satellite_type = "default"){
           if (!sat.full_TLE) {
             console.warn('Satellite missing full_TLE:', sat);
             return;
           }
+          let color, fillColor, fontSize;
+          switch(satellite_type){
+            case "highlighted":
+              color = Color.LIGHTBLUE;
+              fillColor = Color.RED;
+              fontSize = 15;
+              break;
+            case "near":
+              color = Color.YELLOW;
+              fillColor = Color.PURPLE;
+              fontSize = 15;
+              break;
+            default:
+              color = Color.LIME;
+              fillColor = Color.WHITE;
+              fontSize = 10;
+              break;
+          }
+
           const tleLine1 = this.getTleLine1(sat.full_TLE);
           const tleLine2 = this.getTleLine2(sat.full_TLE);
           const satrec = satellite.twoline2satrec(tleLine1, tleLine2);
@@ -70,17 +95,17 @@ export default {
           const lon = satellite.degreesLong(positionGd.longitude);
           const lat = satellite.degreesLat(positionGd.latitude);
           const height = positionGd.height;
-          const entity = this.viewer.entities.add({
+          this.viewer.entities.add({
             id: sat.id,
             position: Cartesian3.fromDegrees(lon, lat, height),
             point: { 
-              pixelSize: (is_highlighted) ? 10 : 15, 
-              color: (is_highlighted) ? Color.LIGHTBLUE : Color.LIME
+              pixelSize: fontSize, 
+              color: color
             },
             label: { 
               text: sat.name || 'Satellite', 
               font: '14pt sans-serif',
-              fillColor: (is_highlighted) ? Color.RED : Color.WHITE,
+              fillColor: fillColor,
             }
           });
       },
@@ -90,16 +115,32 @@ export default {
           console.warn('No satellites data available');
           return;
         }
-        const seletedId = (this.selectedSatellite) ? this.selectedSatellite[0].id : 0
-        this.satellites.forEach(sat => this.renderSatellite(sat, sat.id === seletedId));
+        const selectedId = (this.selectedSatellite) ? this.selectedSatellite[0].id : 0
+        this.satellites.forEach(sat => {
+          let satType;
+          if(sat.id === selectedId){
+            satType = "highlighted";
+          }
+          else if(this.nearSatellites.find(s => s.id === sat.id) != undefined){
+            satType = "near";
+          }
+          else{
+            satType = "default";
+          }
+          this.renderSatellite(sat, satType)
+        });
       }
     },
     watch : {
       satellites(){
         this.initSatellites();
       },
-      selectedSatellite(){
+      async selectedSatellite(){
+        this.isLoading = true;
+        await this.get_near_satellites(this.selectedSatellite[0].id);
+        console.log("near", this.nearSatellites);
         this.initSatellites();
+        this.isLoading = false;
       }
     }
 }
