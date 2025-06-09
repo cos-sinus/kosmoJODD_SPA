@@ -70,8 +70,8 @@ export default {
               fontSize = 15;
               break;
             case "near":
-              color = Color.YELLOW;
-              fillColor = Color.PURPLE;
+              color = Color.ORANGE;
+              fillColor = Color.ORANGERED;
               fontSize = 15;
               break;
             default:

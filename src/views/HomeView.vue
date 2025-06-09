@@ -17,6 +17,7 @@
         <v-card>
           <SatellitesTable :satellites="satellites"/>
         </v-card>
+        <RequestForm />
       </v-col>
     </v-row>
   </v-container>
@@ -27,6 +28,7 @@ import { useSatelliteStore } from '../store/satellite_store';
 import { mapActions, mapState } from 'pinia';
 import SatellitesTable from '../components/SatellitesTable.vue';
 import EarthViewer from '../components/EarthViewer.vue';
+import RequestForm from '../components/RequestForm.vue';
 export default{
   data(){
     return {
@@ -36,7 +38,8 @@ export default{
   },
   components : {
     EarthViewer,
-    SatellitesTable
+    SatellitesTable,
+    RequestForm
   },
   computed: {
     ...mapState(useSatelliteStore, {
