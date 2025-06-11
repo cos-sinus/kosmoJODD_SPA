@@ -1,7 +1,6 @@
 <template>
   <v-app>
-    <header class="bg-blue-lighten-2">
-    </header>
+    <Header />
     <v-main>
       <router-view/>
     </v-main>
@@ -9,13 +8,15 @@
 </template>
 
 <script>
-
+import Header from './components/Header.vue';
 export default {
   name: 'App',
-
+  components : {
+    Header
+  },
   data: () => ({
     //
-  }),
+  })
 }
 </script>
 <style scoped>

@@ -13,15 +13,16 @@
             <v-icon icon="mdi-clock-outline" start></v-icon>
             {{ selectedShootingTime }}
         </v-chip>
-        <v-btn>Отправить заявку</v-btn>
+        <v-btn @click="send">Отправить заявку</v-btn>
     </v-card>
     <v-card class="mt-5" v-else>
         <h2>Спутник не выбран или нет спутников для съемки</h2>
     </v-card>
 </template>
 <script>
-import { mapState } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import { useSatelliteStore } from '../store/satellite_store';
+import { useRequestStore } from '../store/request_store';
 export default {
     data(){
         return {
@@ -30,7 +31,8 @@ export default {
     },
     computed : {
         ...mapState(useSatelliteStore, {
-            nearSatellites: "near_satellites"
+            nearSatellites: "near_satellites",
+            selectedSatellite: "selected_satellite",
         }),
         selectedShootingTime(){
             if(this.selectedCamera){
@@ -38,6 +40,20 @@ export default {
                 return new Date(sat.time_visible).toLocaleString();
             }
             return "";
+        }
+    },
+    methods : {
+        ...mapActions(useRequestStore, {
+            sendRequest: "sendRequest"
+        }),
+        async send(){
+            if(!this.selectedCamera) return;
+            console.log("Заявка", await this.sendRequest({
+                camera_satellite_id: this.selectedCamera,
+                target_satellite_id: this.selectedSatellite.id,
+                request_time: this.selectedShootingTime
+            }));
+
         }
     }
 }
