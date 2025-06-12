@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
-import { send_request } from '../api/request_api'
+import { send_request, get_unchecked_requests } from '../api/request_api'
 import { useUserStore } from './user_store'
 
 export const useRequestStore = defineStore('request_store', {
     state: () => ({
-        
+        unchecked: null
     }),
     actions: {
         async sendRequest(data){
@@ -12,6 +12,13 @@ export const useRequestStore = defineStore('request_store', {
             const token = userStore.token;
             const response = await send_request(data, token);
             return response;
+        },
+        async getUncheckedRequests(){
+            const userStore = useUserStore();
+            const token = userStore.token;
+            const response = await get_unchecked_requests(token);
+            if(response) this.unchecked = response;
+            else return false;
         }
     }
 })

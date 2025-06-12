@@ -47,13 +47,20 @@ export default {
             sendRequest: "sendRequest"
         }),
         async send(){
-            if(!this.selectedCamera) return;
-            console.log("Заявка", await this.sendRequest({
+            if(!this.selectedCamera || !this.selectedSatellite) return;
+            const requestData = {
                 camera_satellite_id: this.selectedCamera,
-                target_satellite_id: this.selectedSatellite.id,
+                target_satellite_id: this.selectedSatellite[0].id,
                 request_time: this.selectedShootingTime
-            }));
-
+            }
+            console.log("Заявка", requestData);
+            console.log("selectedSatellite", this.selectedSatellite);
+            if(await this.sendRequest(requestData)){
+                alert("Заявка успешно отправлена");
+            }
+            else{
+                alert("Произошла ошибка при отправке заявки");
+            }
         }
     }
 }
