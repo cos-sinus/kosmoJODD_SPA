@@ -26,7 +26,8 @@
   <ApproveRequestDialog 
     v-model:visible="approveDialog"
     :request="selected"
-    /> 
+    @confirm="approve" /> 
+
     <RejectRequestDialog
     v-model:visible="rejectDialog"
     :request="selected"
@@ -76,10 +77,17 @@ export default {
   methods : {
     ...mapActions(useRequestStore, {
       getUncheckedRequests : 'getUncheckedRequests',
-      rejectRequest: 'rejectRequest'
+      rejectRequest: 'rejectRequest',
+      confirmRequest: 'confirmRequest'
     }),
     async reject(data){
       await this.rejectRequest(this.selected.id, data);
+    },
+    async approve(data){
+      const formData = new FormData();
+      formData.append('comment', data.comment);
+      formData.append('file', data.file);
+      await this.confirmRequest(this.selected.id, formData);
     }
   },
   async mounted(){

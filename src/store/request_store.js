@@ -29,6 +29,12 @@ export const useRequestStore = defineStore('request_store', {
             const token = userStore.token;
             const response = await reject(token, id, data);
             if(response) await this.getUncheckedRequests();
+        },
+        async confirmRequest(id, formData){
+            const userStore = useUserStore();
+            const token = userStore.token;
+            const response = await confirm(token, id, formData);
+            if(response) await this.getUncheckedRequests();
         }
     }
 })
