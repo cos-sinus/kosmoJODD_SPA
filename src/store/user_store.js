@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { signup, signin, me } from '../api/user_api';
-import { setCookie, getCookie } from '../utils/cookieUtils';
+import { setCookie, getCookie, deleteCookie } from '../utils/cookieUtils';
 
 export const useUserStore = defineStore('user_store', {
     state: () => ({
@@ -39,6 +39,11 @@ export const useUserStore = defineStore('user_store', {
             if(user_info){
                 this.user = user_info;
             }
+        },
+        logout(){
+            this.token = null;
+            this.user = null;
+            deleteCookie("token");
         }
     }
 })

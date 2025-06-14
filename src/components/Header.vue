@@ -3,7 +3,10 @@
         <h1 class="text-white font-weight-bold">КосмоЦОДД</h1>
         <v-btn v-if="user && user?.is_admin" class="mr-10" :to="{name: 'requests'}">Заявки</v-btn>
         <div v-else></div>
-        <v-btn v-if="user" class="mr-10" :to="{name: 'profile'}">{{ user.name }}</v-btn>
+        <div v-if="user" class="pr-5">
+            <v-btn :to="{name: 'profile'}">{{ user.name }}</v-btn>
+            <p class="text-caption text-center mt-2 cursor-pointer" @click="doLogout">Выход</p>
+        </div>
         <v-btn v-else class="mr-10" :to="{name: 'signin'}">Вход</v-btn>
     </header>
 </template>
@@ -18,8 +21,13 @@ export default {
     },
     methods : {
         ...mapActions(useUserStore, {
-            me : "me"
-        })
+            me : "me",
+            logout: "logout"
+        }),
+        doLogout(){
+            this.logout()
+            this.$router.push({name : 'signin'})
+        }
     },
     async mounted(){
         await this.me();
