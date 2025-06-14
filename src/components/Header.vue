@@ -1,6 +1,6 @@
 <template>
     <header class="bg-blue-lighten-2 d-flex justify-space-between align-center pa-4">
-        <h1 class="text-white font-weight-bold">КосмоЦОДД</h1>
+        <h1 class="text-white font-weight-bold" @click="$router.push({name : 'home'})">КосмоЦОДД</h1>
         <v-btn v-if="user && user?.is_admin" class="mr-10" :to="{name: 'requests'}">Заявки</v-btn>
         <div v-else></div>
         <div v-if="user" class="pr-5">
