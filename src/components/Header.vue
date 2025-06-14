@@ -1,6 +1,6 @@
 <template>
     <header class="bg-blue-lighten-2 d-flex justify-space-between align-center pa-4">
-        <h1>ЦОДД</h1>
+        <h1 class="text-white font-weight-bold">КосмоЦОДД</h1>
         <v-btn v-if="user && user?.is_admin" class="mr-10" :to="{name: 'requests'}">Заявки</v-btn>
         <div v-else></div>
         <v-btn v-if="user" class="mr-10" :to="{name: 'profile'}">{{ user.name }}</v-btn>
