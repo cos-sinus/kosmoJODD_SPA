@@ -26,10 +26,11 @@
   <ApproveRequestDialog 
     v-model:visible="approveDialog"
     :request="selected"
-  /> 
-  <RejectRequestDialog
+    /> 
+    <RejectRequestDialog
     v-model:visible="rejectDialog"
     :request="selected"
+    @confirm="reject"
   /> 
 </template>
 <script>
@@ -74,9 +75,12 @@ export default {
   },
   methods : {
     ...mapActions(useRequestStore, {
-      getUncheckedRequests : 'getUncheckedRequests'
+      getUncheckedRequests : 'getUncheckedRequests',
+      rejectRequest: 'rejectRequest'
     }),
-
+    async reject(data){
+      await this.rejectRequest(this.selected.id, data);
+    }
   },
   async mounted(){
     await this.getUncheckedRequests();

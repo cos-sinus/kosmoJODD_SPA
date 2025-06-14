@@ -54,9 +54,6 @@ export default {
       });
       this.$emit('update:visible', false);
     }
-  },
-  updated(){
-    console.log(this.request);
   }
 };
 </script>
