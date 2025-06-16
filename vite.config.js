@@ -13,7 +13,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      cesium: path.resolve(__dirname, 'node_modules/cesium/Source'),
+      cesium: 'cesium/Source',
     },
   },
   define: {
