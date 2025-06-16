@@ -1,56 +1,29 @@
 {
-  "name": "app",
-  "version": "0.1.0",
+  "name": "kosmojodd-spa",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "copy-cesium-assets": "node scripts/copy-cesium-assets.cjs"
   },
   "dependencies": {
-    "@cesium/engine": "^17.0.0",
-    "@mdi/font": "5.9.55",
+    "@mdi/font": "^7.4.47",
     "cesium": "^1.129.0",
-    "core-js": "^3.8.3",
-    "pinia": "^2.1.4",
-    "roboto-fontface": "*",
-    "vue": "^3.2.13",
-    "vue-router": "^4.0.3",
-    "vuetify": "^3.0.0-beta.0",
-    "webfontloader": "^1.0.0"
+    "pinia": "^3.0.2",
+    "sass": "^1.89.0",
+    "sass-loader": "^16.0.5",
+    "satellite.js": "^6.0.0",
+    "vite-plugin-vuetify": "^2.1.1",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1",
+    "vuetify": "^3.8.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-plugin-router": "^5.0.8",
-    "@vue/cli-service": "~5.0.0",
-    "copy-webpack-plugin": "^13.0.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3",
-    "vue-cli-plugin-pinia": "^0.2.4",
-    "vue-cli-plugin-vuetify": "~2.5.8",
-    "webpack-plugin-vuetify": "^2.0.0-alpha.0"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead",
-    "not ie 11"
-  ]
+    "@vitejs/plugin-vue": "^5.2.3",
+    "fs-extra": "^11.3.0",
+    "vite": "^6.3.5"
+  }
 }

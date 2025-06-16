@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
-import { signup, signin } from '@/api/user_api'
+import { signup, signin, me } from '../api/user_api';
+import { setCookie, getCookie, deleteCookie } from '../utils/cookieUtils';
 
 export const useUserStore = defineStore('user_store', {
     state: () => ({
-        token: null
+        token: null,
+        user: null,
     }),
     actions: {
         async signup(data){
@@ -20,9 +22,28 @@ export const useUserStore = defineStore('user_store', {
             console.log("token", token);
             if(token){
                 this.token = token;
+                setCookie("token", token);
+                await this.me();
                 return true;
             }
             return false;
+        },
+        async me(){
+            let token = this.token;
+            if(!token){
+                token = getCookie("token");
+            }
+            if(!token) return;
+            this.token = token;
+            const user_info = await me(token);
+            if(user_info){
+                this.user = user_info;
+            }
+        },
+        logout(){
+            this.token = null;
+            this.user = null;
+            deleteCookie("token");
         }
     }
 })

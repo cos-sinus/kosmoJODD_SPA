@@ -5,13 +5,14 @@
             <v-text-field label="Имя" v-model="signupData.name" width="250"></v-text-field>
             <v-text-field label="Почта" v-model="signupData.email" width="250"></v-text-field>
             <v-text-field type="password" label="Пароль" v-model="signupData.password" width="250"></v-text-field>
-            <v-btn class="text-center" @click="submitForm">Вперед!</v-btn>
+            <v-btn class="text-center text-black" @click="submitForm">Вперед!</v-btn>
+            <p class="ma-5"><router-link :to="{name : 'signin'}">Уже есть аккаунт</router-link></p>
         </v-form>
     </v-sheet>
 
 </template>
 <script> 
-import { useUserStore } from '@/store/user_store';
+import { useUserStore } from '../store/user_store';
 import { mapActions } from 'pinia';
 export default {
     data(){
