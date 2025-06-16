@@ -1,5 +1,7 @@
+import { api_url } from ".";
+
 export const send_request = async (data, token) => {
-    const req = await fetch("http://localhost:5000/requests/", {
+    const req = await fetch(`http://${api_url}/requests/`, {
         method : "POST",
         headers : {
             "Content-Type" : "application/json",
@@ -11,7 +13,7 @@ export const send_request = async (data, token) => {
 }
 
 export const get_unchecked_requests = async (token) => {
-    const req = await fetch("http://localhost:5000/requests/unchecked/", {
+    const req = await fetch(`http://${api_url}/requests/unchecked/`, {
         method : "GET",
         headers : {
             "Content-Type" : "application/json",
@@ -26,7 +28,7 @@ export const get_unchecked_requests = async (token) => {
 }
 
 export const confirm = async (token, request_id, formData) => {
-    const req = await fetch(`http://localhost:5000/requests/accept/${request_id}`, {
+    const req = await fetch(`http://${api_url}/requests/accept/${request_id}`, {
         method: "PUT",
         headers : {
             "Authorization" : `Bearer ${token}`
@@ -41,7 +43,7 @@ export const confirm = async (token, request_id, formData) => {
 }
 
 export const reject = async (token, request_id, data) => {
-    const req = await fetch(`http://localhost:5000/requests/decline/${request_id}`, {
+    const req = await fetch(`http://${api_url}/requests/decline/${request_id}`, {
         method: "PUT",
         headers : {
             "Content-Type" : "application/json",
@@ -57,7 +59,7 @@ export const reject = async (token, request_id, data) => {
 }
 
 export const get_own_requests = async(token) => {
-    const req = await fetch(`http://localhost:5000/requests/own/`, {
+    const req = await fetch(`http://${api_url}/requests/own/`, {
         method : "GET",
         headers : {
             "Content-Type" : "application/json",
