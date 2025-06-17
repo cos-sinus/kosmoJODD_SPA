@@ -4,7 +4,9 @@
 </template>
 
 <script>
-import { Viewer, Cartesian3, Color, EllipsoidTerrainProvider } from '/node_modules/cesium/Source/Cesium.js'
+// import { Viewer, Cartesian3, Color, EllipsoidTerrainProvider } from '/node_modules/cesium/Source/Cesium.js'
+// import { Viewer, Cartesian3, Color, EllipsoidTerrainProvider } from 'cesium/Cesium.js'
+import { Viewer, Cartesian3, Color, EllipsoidTerrainProvider } from 'cesium'
 import * as satellite from 'satellite.js'
 import { useSatelliteStore } from '../store/satellite_store';
 import { mapState, mapActions } from 'pinia';

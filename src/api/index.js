@@ -1,6 +1,6 @@
-export const serverUrl = '/api';
-export const localUrl = 'http://localhost:5000';
+export const serverUrl = 'api';
+export const localUrl = 'localhost:5000';
 
-const MODE = 'production';
+const MODE = 'noproduction';
 
 export const api_url = MODE === 'production' ? serverUrl : localUrl
